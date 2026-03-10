@@ -30,727 +30,231 @@
     overflow-x: hidden;
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: 
-      radial-gradient(ellipse at 20% 20%, rgba(79,142,247,0.07) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(124,92,252,0.07) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .container {
     max-width: 480px;
     margin: 0 auto;
     padding: 20px 16px 80px;
-    position: relative;
-    z-index: 1;
   }
 
-  /* Header */
   .header {
     text-align: center;
     padding: 28px 0 24px;
   }
 
-  .header .label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
   .header h1 {
     font-size: 26px;
     font-weight: 900;
-    background: linear-gradient(135deg, #e2e8f0, #4f8ef7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.2;
   }
 
-  /* Current Time Card */
   .now-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .now-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
   }
 
   .now-time {
     font-family: 'Space Mono', monospace;
     font-size: 40px;
     font-weight: 700;
-    color: var(--text);
-    letter-spacing: -1px;
   }
 
   .now-day {
     font-size: 14px;
     color: var(--muted);
-    margin-top: 4px;
   }
 
-  .now-period {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .notif-btn{
+    width:100%;
+    padding:12px;
+    margin-bottom:20px;
+    border-radius:12px;
+    border:1px dashed var(--border);
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
   }
 
-  .period-badge {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 20px;
-  }
-
-  .period-subject {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .period-room {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  /* Alert Banner */
-  .alert-banner {
-    background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(249,115,22,0.05));
-    border: 1px solid rgba(249,115,22,0.4);
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    display: none;
-    animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .alert-banner.show { display: flex; align-items: flex-start; gap: 12px; }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(-10px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .alert-icon {
-    font-size: 24px;
-    flex-shrink: 0;
-    animation: ring 0.5s ease 0.3s;
-  }
-
-  @keyframes ring {
-    0%, 100% { transform: rotate(0); }
-    20% { transform: rotate(-15deg); }
-    40% { transform: rotate(15deg); }
-    60% { transform: rotate(-10deg); }
-    80% { transform: rotate(10deg); }
-  }
-
-  .alert-text .title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--warn);
-    margin-bottom: 4px;
-  }
-
-  .alert-text .msg {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.5;
-  }
-
-  /* Next Alert Card */
-  .next-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .next-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(79,142,247,0.2), rgba(124,92,252,0.2));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .next-info .label {
-    font-size: 11px;
-    color: var(--muted);
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .next-info .subject {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .next-info .countdown {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    margin-top: 2px;
-  }
-
-  /* Notification Permission */
-  .notif-btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 14px;
-    border: 1px dashed var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .notif-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(79,142,247,0.05);
-  }
-
-  .notif-btn.granted {
-    border-color: var(--green);
-    color: var(--green);
-    background: rgba(34,197,94,0.05);
-    cursor: default;
-  }
-
-  .notif-btn.denied {
-    border-color: #ef4444;
-    color: #ef4444;
-    background: rgba(239,68,68,0.05);
-    cursor: default;
-  }
-
-  /* Timetable Section */
-  .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  .day-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-  }
-  .day-tabs::-webkit-scrollbar { display: none; }
-
-  .day-tab {
-    flex-shrink: 0;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
-  }
-
-  .day-tab.active {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: white;
-    border-color: transparent;
-  }
-
-  .timetable {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .period-row {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all 0.2s;
-  }
-
-  .period-row.current {
-    border-color: var(--accent);
-    background: rgba(79,142,247,0.08);
-  }
-
-  .period-row.move {
-    border-left: 3px solid var(--warn);
-  }
-
-  .pnum {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--muted);
-    width: 20px;
-    flex-shrink: 0;
-    text-align: center;
-  }
-
-  .period-row.current .pnum { color: var(--accent); }
-
-  .ptime {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    width: 72px;
-    flex-shrink: 0;
-  }
-
-  .pname {
-    font-size: 14px;
-    font-weight: 700;
-    flex: 1;
-  }
-
-  .proom {
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-
-  .proom.move-tag {
-    background: rgba(249,115,22,0.15);
-    color: var(--warn);
-  }
-
-  .proom.home-tag {
-    background: rgba(100,116,139,0.15);
-    color: var(--muted);
-  }
-
-  .proom.lab-tag {
-    background: rgba(124,92,252,0.15);
-    color: #a78bfa;
-  }
-
-  .empty-row {
-    color: var(--muted);
-    font-size: 13px;
-    font-style: italic;
-  }
-
-  /* Status dot */
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 2s ease infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
 </style>
 </head>
+
 <body>
+
 <div class="container">
-  <div class="header">
-    <div class="label">Class Alert System</div>
-    <h1>이동수업 알리미 🔔</h1>
-  </div>
 
-  <!-- 알림 권한 버튼 -->
-  <button class="notif-btn" id="notifBtn" onclick="requestNotification()">
-    <span>🔔</span> 브라우저 알림 허용하기
-  </button>
+<div class="header">
+<h1>이동수업 알리미 🔔</h1>
+</div>
 
-  <!-- 현재 시각 카드 -->
-  <div class="now-card">
-    <div class="now-time" id="nowTime">--:--:--</div>
-    <div class="now-day" id="nowDay">--요일</div>
-    <div class="now-period" id="nowPeriod">
-      <span class="period-badge" id="periodBadge">-교시</span>
-      <div>
-        <div class="period-subject" id="currentSubject">-</div>
-        <div class="period-room" id="currentRoom">-</div>
-      </div>
-    </div>
-  </div>
+<button class="notif-btn" id="notifBtn" onclick="requestNotification()">
+🔔 브라우저 알림 허용하기
+</button>
 
-  <!-- 이동 알림 배너 -->
-  <div class="alert-banner" id="alertBanner">
-    <div class="alert-icon">🏃</div>
-    <div class="alert-text">
-      <div class="title">⚡ 이동수업 알림</div>
-      <div class="msg" id="alertMsg"></div>
-    </div>
-  </div>
+<div class="now-card">
+<div class="now-time" id="nowTime">--:--:--</div>
+<div class="now-day" id="nowDay">--요일</div>
 
-  <!-- 다음 이동수업 -->
-  <div class="next-card" id="nextCard">
-    <div class="next-icon">⏰</div>
-    <div class="next-info">
-      <div class="label">다음 이동수업</div>
-      <div class="subject" id="nextSubject">없음</div>
-      <div class="countdown" id="nextCountdown"></div>
-    </div>
-  </div>
+<div style="margin-top:15px">
+<span id="periodBadge">-</span>
+<div id="currentSubject">-</div>
+<div id="currentRoom">-</div>
+</div>
+</div>
 
-  <!-- 요일 탭 + 시간표 -->
-  <div class="section-title">오늘의 시간표</div>
-  <div class="day-tabs" id="dayTabs">
-    <div class="day-tab" data-day="1" onclick="selectDay(1)">월</div>
-    <div class="day-tab" data-day="2" onclick="selectDay(2)">화</div>
-    <div class="day-tab" data-day="3" onclick="selectDay(3)">수</div>
-    <div class="day-tab" data-day="4" onclick="selectDay(4)">목</div>
-    <div class="day-tab" data-day="5" onclick="selectDay(5)">금</div>
-  </div>
-  <div class="timetable" id="timetable"></div>
 </div>
 
 <script>
-// ===================== 시간표 데이터 =====================
-// moveClass: true이면 이동수업 (물리학 2-2 제외)
-// room: 이동할 반/장소
-const TIMETABLE = {
-  1: [ // 월요일
-    { subject: '영어1',       room: null,    move: false },
-    { subject: '미디어 영어', room: '2-9반', move: true  },
-    { subject: '사회와 문화', room: '2-4반', move: true  },
-    { subject: '문학',        room: null,    move: false },
-    { subject: '인공지능 기초', room: '컴퓨터실', move: true },
-    { subject: '대수',        room: null,    move: false },
-    { subject: '미적1',       room: null,    move: false },
-  ],
-  2: [ // 화요일
-    { subject: null,          room: null,    move: false }, // 공강
-    { subject: null,          room: null,    move: false }, // 공강
-    { subject: '화학',        room: '2-3반', move: true  },
-    { subject: '물리학',      room: '2-2반', move: false }, // 본인반
-    { subject: '스문',        room: null,    move: false },
-    { subject: '대수',        room: null,    move: false },
-    { subject: '미디어 영어', room: '2-9반', move: true  },
-  ],
-  3: [ // 수요일
-    { subject: '물리학',      room: '2-2반', move: false }, // 본인반
-    { subject: '문학',        room: null,    move: false },
-    { subject: '미적1',       room: null,    move: false },
-    { subject: '미디어 영어', room: '2-9반', move: true  },
-    { subject: null,          room: null,    move: false }, // 공강
-    { subject: '영어1',       room: null,    move: false },
-    { subject: '인공지능 기초', room: '컴퓨터실', move: true },
-  ],
-  4: [ // 목요일
-    { subject: '물리학',      room: '2-2반', move: false }, // 본인반
-    { subject: '사회와 문화', room: '2-4반', move: true  },
-    { subject: '대수',        room: null,    move: false },
-    { subject: '화학',        room: '2-3반', move: true  },
-    { subject: '영어1',       room: null,    move: false },
-    { subject: '문학',        room: null,    move: false },
-    { subject: '인공지능 기초', room: '컴퓨터실', move: true },
-  ],
-  5: [ // 금요일
-    { subject: '사회와 문화', room: '2-4반', move: true  },
-    { subject: '스문',        room: null,    move: false },
-    { subject: '미적1',       room: null,    move: false },
-    { subject: '화학',        room: '2-3반', move: true  },
-    { subject: null,          room: null,    move: false },
-    { subject: null,          room: null,    move: false },
-    { subject: null,          room: null,    move: false },
-  ],
-};
 
-// 교시 시작/종료 시각 [시작HH, 시작MM, 종료HH, 종료MM]
-const PERIODS = [
-  [8, 30, 9, 20],
-  [9, 30, 10, 20],
-  [10, 30, 11, 20],
-  [11, 30, 12, 20],
-  [13, 40, 14, 30],
-  [14, 40, 15, 30],
-  [15, 40, 16, 30],
-];
+const TIMETABLE={
+1:[
+{subject:'영어1',room:null,move:false},
+{subject:'미디어 영어',room:'2-9반',move:true},
+{subject:'사회와 문화',room:'2-4반',move:true},
+{subject:'문학',room:null,move:false},
+{subject:'인공지능 기초',room:'컴퓨터실',move:true},
+{subject:'대수',room:null,move:false},
+{subject:'미적1',room:null,move:false}
+],
 
-const DAY_NAMES = ['일', '월', '화', '수', '목', '금', '토'];
-const ROOM_TYPE = { '컴퓨터실': 'lab', '2-2반': 'home' };
-
-// ===================== 알림 관련 =====================
-let notifGranted = false;
-let lastAlerted = -1;
-let selectedDay = null;
-
-function requestNotification() {
-  if (!('Notification' in window)) {
-    alert('이 브라우저는 알림을 지원하지 않아요.');
-    return;
-  }
-  Notification.requestPermission().then(perm => {
-    const btn = document.getElementById('notifBtn');
-    if (perm === 'granted') {
-      notifGranted = true;
-      btn.textContent = '✅ 알림이 허용되었어요!';
-      btn.className = 'notif-btn granted';
-    } else {
-      btn.textContent = '❌ 알림이 거부되었어요 (설정에서 변경)';
-      btn.className = 'notif-btn denied';
-    }
-  });
+2:[
+{subject:null},
+{subject:null},
+{subject:'화학',room:'2-3반',move:true},
+{subject:'물리학',room:'2-2반',move:false},
+{subject:'스문',room:null,move:false},
+{subject:'대수',room:null,move:false},
+{subject:'미디어 영어',room:'2-9반',move:true}
+]
 }
 
-function sendNotification(title, body) {
-  if (Notification.permission === 'granted') {
-    new Notification(title, { body, icon: '🔔' });
-  }
+const PERIODS=[
+[8,30,9,20],
+[9,30,10,20],
+[10,30,11,20],
+[11,30,12,20],
+[13,40,14,30],
+[14,40,15,30],
+[15,40,16,30]
+]
+
+const DAY_NAMES=['일','월','화','수','목','금','토']
+
+let notifGranted=false
+
+function requestNotification(){
+
+if(!('Notification' in window)){
+alert('이 브라우저는 알림을 지원하지 않습니다')
+return
 }
 
-// ===================== 시간 계산 =====================
-function toMinutes(h, m) { return h * 60 + m; }
+Notification.requestPermission().then(perm=>{
 
-function getCurrentPeriod(h, m) {
-  const now = toMinutes(h, m);
-  for (let i = 0; i < PERIODS.length; i++) {
-    const [sh, sm, eh, em] = PERIODS[i];
-    if (now >= toMinutes(sh, sm) && now <= toMinutes(eh, em)) return i;
-  }
-  return -1; // 쉬는 시간 or 수업 없음
+const btn=document.getElementById('notifBtn')
+
+if(perm==='granted'){
+notifGranted=true
+btn.textContent='✅ 알림 허용됨'
+}else{
+btn.textContent='❌ 알림 거부됨'
 }
 
-// 교시 끝나는 시각 기준으로 알림 (종료 1분 전 ~ 종료 시각)
-function shouldAlertForPeriod(periodIdx, h, m) {
-  if (periodIdx < 0 || periodIdx >= PERIODS.length) return false;
-  const [, , eh, em] = PERIODS[periodIdx];
-  const endMin = toMinutes(eh, em);
-  const nowMin = toMinutes(h, m);
-  // 종료 5분 전부터 종료 시각까지
-  return nowMin >= endMin - 5 && nowMin <= endMin;
+})
+
 }
 
-// ===================== 시간표 렌더링 =====================
-function getRoomTag(move, room) {
-  if (!move || !room) return `<span class="proom home-tag">본인반</span>`;
-  const type = ROOM_TYPE[room] || 'move';
-  if (type === 'lab') return `<span class="proom lab-tag">${room}</span>`;
-  return `<span class="proom move-tag">${room}</span>`;
+function toMinutes(h,m){
+return h*60+m
 }
 
-function renderTimetable(day, currentPeriod) {
-  const tt = TIMETABLE[day] || [];
-  const container = document.getElementById('timetable');
-  container.innerHTML = '';
+function getCurrentPeriod(h,m){
 
-  tt.forEach((item, i) => {
-    const [sh, sm, eh, em] = PERIODS[i];
-    const isCurrent = i === currentPeriod && day === new Date().getDay();
-    const row = document.createElement('div');
-    row.className = 'period-row' + (isCurrent ? ' current' : '') + (item.move ? ' move' : '');
+const now=toMinutes(h,m)
 
-    if (!item.subject) {
-      row.innerHTML = `
-        <span class="pnum">${i+1}</span>
-        <span class="ptime">${String(sh).padStart(2,'0')}:${String(sm).padStart(2,'0')}</span>
-        <span class="pname empty-row">없음</span>
-      `;
-    } else {
-      row.innerHTML = `
-        ${isCurrent ? '<div class="status-dot"></div>' : `<span class="pnum">${i+1}</span>`}
-        <span class="ptime">${String(sh).padStart(2,'0')}:${String(sm).padStart(2,'0')}<br><span style="color:#374151;font-size:9px">~${String(eh).padStart(2,'0')}:${String(em).padStart(2,'0')}</span></span>
-        <span class="pname">${item.subject}</span>
-        ${getRoomTag(item.move, item.room)}
-      `;
-    }
-    container.appendChild(row);
-  });
+for(let i=0;i<PERIODS.length;i++){
+
+const p=PERIODS[i]
+
+const start=toMinutes(p[0],p[1])
+const end=toMinutes(p[2],p[3])
+
+if(now>=start && now<=end){
+return i
 }
 
-function selectDay(day) {
-  selectedDay = day;
-  document.querySelectorAll('.day-tab').forEach(t => {
-    t.classList.toggle('active', parseInt(t.dataset.day) === day);
-  });
-  const today = new Date().getDay();
-  renderTimetable(day, today === day ? getCurrentPeriod(new Date().getHours(), new Date().getMinutes()) : -1);
 }
 
-// ===================== 다음 이동수업 =====================
-function getNextMoveClass(day, h, m) {
-  const tt = TIMETABLE[day] || [];
-  const nowMin = toMinutes(h, m);
-  for (let i = 0; i < tt.length; i++) {
-    const [sh, sm] = PERIODS[i];
-    if (tt[i].move && toMinutes(sh, sm) > nowMin) {
-      return { periodIdx: i, ...tt[i] };
-    }
-  }
-  return null;
+return -1
 }
 
-function formatCountdown(targetH, targetM, nowH, nowM) {
-  const diff = toMinutes(targetH, targetM) - toMinutes(nowH, nowM);
-  if (diff <= 0) return '';
-  const h = Math.floor(diff / 60);
-  const m = diff % 60;
-  if (h > 0) return `${h}시간 ${m}분 후`;
-  return `${m}분 후`;
+function tick(){
+
+const now=new Date()
+
+const h=now.getHours()
+const m=now.getMinutes()
+const s=now.getSeconds()
+const day=now.getDay()
+
+document.getElementById('nowTime').textContent=
+String(h).padStart(2,'0')+":"+
+String(m).padStart(2,'0')+":"+
+String(s).padStart(2,'0')
+
+document.getElementById('nowDay').textContent=
+DAY_NAMES[day]+"요일"
+
+const period=getCurrentPeriod(h,m)
+
+const tt=TIMETABLE[day]
+
+if(period>=0 && tt && tt[period] && tt[period].subject){
+
+const item=tt[period]
+
+document.getElementById('periodBadge').textContent=(period+1)+"교시"
+document.getElementById('currentSubject').textContent=item.subject
+
+if(item.move){
+document.getElementById('currentRoom').textContent="📍 "+item.room
+}else{
+document.getElementById('currentRoom').textContent="📍 본인 교실"
 }
 
-// ===================== 메인 루프 =====================
-function tick() {
-  const now = new Date();
-  const h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
-  const day = now.getDay(); // 0=일 ~ 6=토
-  const isWeekday = day >= 1 && day <= 5;
+}else{
 
-  // 시각 표시
-  document.getElementById('nowTime').textContent =
-    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  document.getElementById('nowDay').textContent =
-    `${DAY_NAMES[day]}요일 · ${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`;
+document.getElementById('periodBadge').textContent="-"
+document.getElementById('currentSubject').textContent="수업 없음"
+document.getElementById('currentRoom').textContent=""
 
-  const tt = TIMETABLE[day] || [];
-  const periodIdx = isWeekday ? getCurrentPeriod(h, m) : -1;
-
-  // 현재 교시 표시
-  if (periodIdx >= 0 && tt[periodIdx]?.subject) {
-    const item = tt[periodIdx];
-    document.getElementById('periodBadge').textContent = `${periodIdx+1}교시`;
-    document.getElementById('currentSubject').textContent = item.subject;
-    document.getElementById('currentRoom').textContent = item.move ? `📍 ${item.room}` : '📍 본인 교실';
-  } else {
-    document.getElementById('periodBadge').textContent = '-';
-    document.getElementById('currentSubject').textContent = isWeekday ? '쉬는 시간' : '주말';
-    document.getElementById('currentRoom').textContent = '';
-  }
-
-  // 이동수업 알림 로직 (교시 종료 5분 전)
-  if (isWeekday && periodIdx >= 0) {
-    const item = tt[periodIdx];
-    if (item?.move && shouldAlertForPeriod(periodIdx, h, m) && lastAlerted !== periodIdx) {
-      lastAlerted = periodIdx;
-      const msg = `${item.subject} 수업이므로 ${item.room}(으)로 이동해 주세요!`;
-      
-      // 배너 표시
-      const banner = document.getElementById('alertBanner');
-      document.getElementById('alertMsg').textContent = msg;
-      banner.classList.add('show');
-      setTimeout(() => banner.classList.remove('show'), 30000);
-
-      // 푸시 알림
-      sendNotification('🏃 이동수업 알림', msg);
-    }
-
-    // 다음 교시가 이동수업이면 미리 알림
-    const nextIdx = periodIdx + 1;
-    if (nextIdx < tt.length && tt[nextIdx]?.move) {
-      const [, , eh, em] = PERIODS[periodIdx];
-      const timeLeft = toMinutes(eh, em) - toMinutes(h, m);
-      if (timeLeft === 5 && lastAlerted !== `pre_${nextIdx}`) {
-        lastAlerted = `pre_${nextIdx}`;
-        const msg = `다음 교시는 ${tt[nextIdx].subject}입니다. ${tt[nextIdx].room}(으)로 이동 준비해 주세요!`;
-        sendNotification('⏰ 다음 교시 이동 준비', msg);
-      }
-    }
-  }
-
-  // 다음 이동수업 표시
-  const next = isWeekday ? getNextMoveClass(day, h, m) : null;
-  if (next) {
-    const [sh, sm] = PERIODS[next.periodIdx];
-    document.getElementById('nextSubject').textContent = `${next.periodIdx+1}교시 ${next.subject} → ${next.room}`;
-    document.getElementById('nextCountdown').textContent = formatCountdown(sh, sm, h, m);
-  } else {
-    document.getElementById('nextSubject').textContent = isWeekday ? '오늘은 더 이상 없어요' : '주말이에요 😊';
-    document.getElementById('nextCountdown').textContent = '';
-  }
-
-  // 시간표 리렌더 (탭이 오늘인 경우)
-  if (!selectedDay || selectedDay === day) {
-    renderTimetable(day, periodIdx);
-  }
 }
 
-// ===================== 초기화 =====================
-window.onload = () => {
-  // 알림 권한 상태 체크
-const btn = document.getElementById('notifBtn');
+}
 
-if ('Notification' in window) {
+window.onload=function(){
 
-  if (Notification.permission === 'granted') {
-    notifGranted = true;
-    btn.textContent = '✅ 알림이 허용되어 있어요';
-    btn.className = 'notif-btn granted';
+const btn=document.getElementById('notifBtn')
 
-  } else if (Notification.permission === 'denied') {
-    btn.textContent = '❌ 알림이 차단됨 (브라우저 설정에서 허용)';
-    btn.className = 'notif-btn denied';
-  }
+if('Notification' in window){
 
-} else {
-  btn.style.display
+if(Notification.permission==='granted'){
+notifGranted=true
+btn.textContent='✅ 알림 허용됨'
+}
 
-  // 오늘 날짜로 탭 설정
-  const today = new Date().getDay();
-  const initDay = today >= 1 && today <= 5 ? today : 1;
-  selectDay(initDay);
+}else{
 
-  tick();
-  setInterval(tick, 1000);
-};
+btn.style.display="none"
+
+}
+
+tick()
+setInterval(tick,1000)
+
+}
+
 </script>
+
 </body>
 </html>
-
