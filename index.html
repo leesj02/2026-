@@ -4,109 +4,119 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이동수업 알리미</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
 
-  :root {
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --surface2: #1a2235;
-    --accent: #4f8ef7;
-    --accent2: #7c5cfc;
-    --warn: #f97316;
-    --green: #22c55e;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --border: #1e2d45;
-  }
+body{
+font-family:sans-serif;
+background:#0a0e1a;
+color:white;
+padding:20px;
+max-width:500px;
+margin:auto;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+.now-time{
+font-size:40px;
+font-weight:bold;
+margin-top:10px;
+}
 
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+.now-day{
+color:#94a3b8;
+margin-bottom:20px;
+}
 
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px 16px 80px;
-  }
+.card{
+background:#111827;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+}
 
-  .header {
-    text-align: center;
-    padding: 28px 0 24px;
-  }
+.tabs{
+display:flex;
+gap:6px;
+margin-bottom:10px;
+}
 
-  .header h1 {
-    font-size: 26px;
-    font-weight: 900;
-  }
+.tabs button{
+flex:1;
+padding:8px;
+background:#1e293b;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
 
-  .now-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
+.tabs button.active{
+background:#4f8ef7;
+}
 
-  .now-time {
-    font-family: 'Space Mono', monospace;
-    font-size: 40px;
-    font-weight: 700;
-  }
+.row{
+padding:10px;
+border-bottom:1px solid #1e2d45;
+}
 
-  .now-day {
-    font-size: 14px;
-    color: var(--muted);
-  }
-
-  .notif-btn{
-    width:100%;
-    padding:12px;
-    margin-bottom:20px;
-    border-radius:12px;
-    border:1px dashed var(--border);
-    background:transparent;
-    color:var(--muted);
-    cursor:pointer;
-  }
+.row.current{
+background:#1e293b;
+}
 
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<h2>이동수업 알리미</h2>
 
-<div class="header">
-<h1>이동수업 알리미 🔔</h1>
-</div>
+<div class="card">
 
-<button class="notif-btn" id="notifBtn" onclick="requestNotification()">
-🔔 브라우저 알림 허용하기
-</button>
-
-<div class="now-card">
 <div class="now-time" id="nowTime">--:--:--</div>
 <div class="now-day" id="nowDay">--요일</div>
 
-<div style="margin-top:15px">
-<span id="periodBadge">-</span>
+<div>
+<div id="periodBadge">-</div>
 <div id="currentSubject">-</div>
-<div id="currentRoom">-</div>
-</div>
+<div id="currentRoom"></div>
 </div>
 
 </div>
+
+
+<div class="card">
+
+<div class="tabs">
+
+<button onclick="selectDay(1)">월</button>
+<button onclick="selectDay(2)">화</button>
+<button onclick="selectDay(3)">수</button>
+<button onclick="selectDay(4)">목</button>
+<button onclick="selectDay(5)">금</button>
+
+</div>
+
+<div id="timetable"></div>
+
+</div>
+
 
 <script>
 
+const DAY_NAMES=['일','월','화','수','목','금','토']
+
+const PERIODS=[
+[8,30,9,20],
+[9,30,10,20],
+[10,30,11,20],
+[11,30,12,20],
+[13,40,14,30],
+[14,40,15,30],
+[15,40,16,30]
+]
+
 const TIMETABLE={
+
 1:[
 {subject:'영어1',room:null,move:false},
 {subject:'미디어 영어',room:'2-9반',move:true},
@@ -125,42 +135,37 @@ const TIMETABLE={
 {subject:'스문',room:null,move:false},
 {subject:'대수',room:null,move:false},
 {subject:'미디어 영어',room:'2-9반',move:true}
+],
+
+3:[
+{subject:'물리학',room:'2-2반',move:false},
+{subject:'문학',room:null,move:false},
+{subject:'미적1',room:null,move:false},
+{subject:'미디어 영어',room:'2-9반',move:true},
+{subject:null},
+{subject:'영어1',room:null,move:false},
+{subject:'인공지능 기초',room:'컴퓨터실',move:true}
+],
+
+4:[
+{subject:'물리학',room:'2-2반',move:false},
+{subject:'사회와 문화',room:'2-4반',move:true},
+{subject:'대수',room:null,move:false},
+{subject:'화학',room:'2-3반',move:true},
+{subject:'영어1',room:null,move:false},
+{subject:'문학',room:null,move:false},
+{subject:'인공지능 기초',room:'컴퓨터실',move:true}
+],
+
+5:[
+{subject:'사회와 문화',room:'2-4반',move:true},
+{subject:'스문',room:null,move:false},
+{subject:'미적1',room:null,move:false},
+{subject:'화학',room:'2-3반',move:true},
+{subject:null},
+{subject:null},
+{subject:null}
 ]
-}
-
-const PERIODS=[
-[8,30,9,20],
-[9,30,10,20],
-[10,30,11,20],
-[11,30,12,20],
-[13,40,14,30],
-[14,40,15,30],
-[15,40,16,30]
-]
-
-const DAY_NAMES=['일','월','화','수','목','금','토']
-
-let notifGranted=false
-
-function requestNotification(){
-
-if(!('Notification' in window)){
-alert('이 브라우저는 알림을 지원하지 않습니다')
-return
-}
-
-Notification.requestPermission().then(perm=>{
-
-const btn=document.getElementById('notifBtn')
-
-if(perm==='granted'){
-notifGranted=true
-btn.textContent='✅ 알림 허용됨'
-}else{
-btn.textContent='❌ 알림 거부됨'
-}
-
-})
 
 }
 
@@ -186,6 +191,63 @@ return i
 }
 
 return -1
+
+}
+
+function renderTimetable(day){
+
+const tt=TIMETABLE[day]
+const container=document.getElementById("timetable")
+
+container.innerHTML=""
+
+if(!tt){
+container.innerHTML="시간표 없음"
+return
+}
+
+const now=new Date()
+const today=now.getDay()
+const period=getCurrentPeriod(now.getHours(),now.getMinutes())
+
+for(let i=0;i<tt.length;i++){
+
+const item=tt[i]
+
+const row=document.createElement("div")
+
+row.className="row"
+
+if(day===today && i===period){
+row.classList.add("current")
+}
+
+if(!item.subject){
+
+row.textContent=(i+1)+"교시 : 없음"
+
+}else{
+
+let room="본인교실"
+
+if(item.move){
+room=item.room
+}
+
+row.textContent=(i+1)+"교시 "+item.subject+" → "+room
+
+}
+
+container.appendChild(row)
+
+}
+
+}
+
+function selectDay(day){
+
+renderTimetable(day)
+
 }
 
 function tick(){
@@ -197,36 +259,35 @@ const m=now.getMinutes()
 const s=now.getSeconds()
 const day=now.getDay()
 
-document.getElementById('nowTime').textContent=
-String(h).padStart(2,'0')+":"+
-String(m).padStart(2,'0')+":"+
-String(s).padStart(2,'0')
+document.getElementById("nowTime").textContent=
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0")
 
-document.getElementById('nowDay').textContent=
+document.getElementById("nowDay").textContent=
 DAY_NAMES[day]+"요일"
 
 const period=getCurrentPeriod(h,m)
-
 const tt=TIMETABLE[day]
 
 if(period>=0 && tt && tt[period] && tt[period].subject){
 
 const item=tt[period]
 
-document.getElementById('periodBadge').textContent=(period+1)+"교시"
-document.getElementById('currentSubject').textContent=item.subject
+document.getElementById("periodBadge").textContent=(period+1)+"교시"
+document.getElementById("currentSubject").textContent=item.subject
 
 if(item.move){
-document.getElementById('currentRoom').textContent="📍 "+item.room
+document.getElementById("currentRoom").textContent="📍 "+item.room
 }else{
-document.getElementById('currentRoom').textContent="📍 본인 교실"
+document.getElementById("currentRoom").textContent="📍 본인 교실"
 }
 
 }else{
 
-document.getElementById('periodBadge').textContent="-"
-document.getElementById('currentSubject').textContent="수업 없음"
-document.getElementById('currentRoom').textContent=""
+document.getElementById("periodBadge").textContent="-"
+document.getElementById("currentSubject").textContent="수업 없음"
+document.getElementById("currentRoom").textContent=""
 
 }
 
@@ -234,19 +295,10 @@ document.getElementById('currentRoom').textContent=""
 
 window.onload=function(){
 
-const btn=document.getElementById('notifBtn')
+const today=new Date().getDay()
 
-if('Notification' in window){
-
-if(Notification.permission==='granted'){
-notifGranted=true
-btn.textContent='✅ 알림 허용됨'
-}
-
-}else{
-
-btn.style.display="none"
-
+if(today>=1 && today<=5){
+renderTimetable(today)
 }
 
 tick()
