@@ -725,15 +725,22 @@ function tick() {
 // ===================== 초기화 =====================
 window.onload = () => {
   // 알림 권한 상태 체크
-  const btn = document.getElementById('notifBtn');
+const btn = document.getElementById('notifBtn');
+
+if ('Notification' in window) {
+
   if (Notification.permission === 'granted') {
     notifGranted = true;
     btn.textContent = '✅ 알림이 허용되어 있어요';
     btn.className = 'notif-btn granted';
+
   } else if (Notification.permission === 'denied') {
     btn.textContent = '❌ 알림이 차단됨 (브라우저 설정에서 허용)';
     btn.className = 'notif-btn denied';
   }
+
+} else {
+  btn.style.display
 
   // 오늘 날짜로 탭 설정
   const today = new Date().getDay();
@@ -746,3 +753,4 @@ window.onload = () => {
 </script>
 </body>
 </html>
+
